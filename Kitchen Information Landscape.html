@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mise en Place - BOH Information Landscape</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --amber: #F59E0B;
+            --blue: #3B82F6;
+            --pink: #EC4899;
+            --emerald: #10B981;
+            --orange: #F97316;
+            --teal: #14B8A6;
+            --purple: #A855F7;
+            --red: #EF4444;
+            --slate-950: #020617;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-600: #475569;
+            --slate-400: #94a3b8;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--slate-950) 0%, var(--slate-900) 50%, var(--slate-950) 100%);
+            color: var(--white);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background gradient */
+        .bg-animation {
+            position: fixed;
+            inset: 0;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .bg-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(168, 85, 247, 0.2) 50%, rgba(236, 72, 153, 0.2) 100%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Grid pattern overlay */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.05;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(255,255,255,.02) 25%, rgba(255,255,255,.02) 26%, transparent 27%, transparent 74%, rgba(255,255,255,.02) 75%, rgba(255,255,255,.02) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(255,255,255,.02) 25%, rgba(255,255,255,.02) 26%, transparent 27%, transparent 74%, rgba(255,255,255,.02) 75%, rgba(255,255,255,.02) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+        }
+
+        /* Main container */
+        .landscape-container {
+            position: relative;
+            z-index: 10;
+            padding: 1.5rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .landscape-container {
+                padding: 2rem;
+            }
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .title-section h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            background: linear-gradient(to right, var(--white) 0%, rgba(255,255,255,0.6) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .title-section h1 {
+                font-size: 3rem;
+            }
+        }
+
+        .subtitle {
+            font-size: 0.875rem;
+            color: var(--slate-400);
+            margin-top: 0.25rem;
+        }
+
+        .progress-section {
+            text-align: right;
+        }
+
+        .progress-percentage {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .progress-label {
+            font-size: 0.75rem;
+            color: var(--slate-400);
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            height: 4px;
+            background: var(--slate-800);
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--blue) 0%, var(--purple) 50%, var(--pink) 100%);
+            transition: width 0.7s ease-out;
+            border-radius: 9999px;
+        }
+
+        /* Zone headers */
+        .zone-header {
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--slate-400);
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .zone-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--slate-700), transparent);
+        }
+
+        /* General prep zone */
+        .general-prep-zone {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 1rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .general-prep-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .general-item {
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .general-item:hover {
+            transform: scale(1.02);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .general-item.complete {
+            background: rgba(16, 185, 129, 0.2);
+            transform: scale(0.98);
+        }
+
+        .general-item-header {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .general-item-detail {
+            font-size: 0.75rem;
+            color: var(--slate-300);
+        }
+
+        .quantity-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--emerald);
+            margin-left: auto;
+        }
+
+        /* Dish grid */
+        .dish-zones {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .dish-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .dish-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .dish-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .dish-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Dish card */
+        .dish-card {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        .dish-card:hover {
+            transform: scale(1.05);
+        }
+
+        .dish-card.complete {
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+
+        .dish-card.touched:not(.complete) {
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.2);
+        }
+
+        .glass-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* Dish header */
+        .dish-header {
+            position: relative;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .dish-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .dish-name {
+            font-weight: 700;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .dish-name.complete {
+            color: var(--emerald);
+        }
+
+        .sparkle-icon {
+            width: 1rem;
+            height: 1rem;
+            color: var(--emerald);
+            display: none;
+        }
+
+        .sparkle-icon.visible {
+            display: block;
+        }
+
+        /* Dish progress */
+        .dish-progress {
+            position: relative;
+            height: 0.5rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .dish-progress-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.5s ease-out;
+        }
+
+        .dish-progress-fill.complete {
+            background: var(--emerald);
+        }
+
+        /* Ingredients list */
+        .ingredients-list {
+            padding: 1rem;
+            max-height: 20rem;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.1) transparent;
+        }
+
+        .ingredients-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .ingredients-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .ingredients-list::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 9999px;
+        }
+
+        /* Ingredient item */
+        .ingredient-item {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            text-align: left;
+            background: rgba(255,255,255,0.05);
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .ingredient-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .ingredient-item:active {
+            transform: scale(0.95);
+        }
+
+        .ingredient-item.complete {
+            background: rgba(16, 185, 129, 0.2);
+            transform: scale(0.95);
+        }
+
+        .ingredient-item.shared.active-shared {
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.3);
+        }
+
+        /* Sub-recipe card */
+        .sub-recipe {
+            background: rgba(255,255,255,0.03);
+            border-left: 3px solid var(--orange);
+            margin-bottom: 0.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .sub-recipe-title {
+            font-weight: 700;
+            color: var(--orange);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .sub-recipe-content {
+            font-size: 0.75rem;
+            color: var(--slate-300);
+        }
+
+        .sub-recipe-section {
+            margin-bottom: 0.5rem;
+        }
+
+        .sub-recipe-label {
+            font-weight: 600;
+            color: var(--slate-200);
+        }
+
+        /* Ingredient checkbox */
+        .ingredient-checkbox {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s;
+            flex-shrink: 0;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .ingredient-item:hover .ingredient-checkbox {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .ingredient-checkbox.complete {
+            background: var(--emerald);
+            color: var(--slate-900);
+        }
+
+        .ingredient-name {
+            flex: 1;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .ingredient-name.complete {
+            color: var(--emerald);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .shared-indicator {
+            width: 0.75rem;
+            height: 0.75rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .cross-ref {
+            font-size: 0.7rem;
+            color: var(--teal);
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        /* Equipment zone */
+        .equipment-zone {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(168, 85, 247, 0.05);
+            border-radius: 1rem;
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .equipment-item {
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--slate-300);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .equipment-item:hover {
+            background: rgba(255,255,255,0.05);
+            transform: scale(1.02);
+        }
+
+        .equipment-item.complete {
+            background: rgba(168, 85, 247, 0.2);
+            color: var(--purple);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(16px);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @media (min-width: 768px) {
+            .tooltip {
+                left: auto;
+                max-width: 24rem;
+            }
+        }
+
+        .tooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tooltip-text {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .tooltip-ingredient {
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .tooltip-dishes {
+            display: block;
+            margin-top: 0.25rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* SVG Icons */
+        .icon {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Connection lines for shared ingredients */
+        .connection-lines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background animations -->
+    <div class="bg-animation">
+        <div class="bg-gradient"></div>
+    </div>
+    <div class="grid-overlay"></div>
+
+    <!-- Connection lines SVG -->
+    <svg class="connection-lines" id="connectionLines"></svg>
+
+    <!-- Main landscape container -->
+    <div class="landscape-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="title-section">
+                <h1>BOH MISE EN PLACE</h1>
+                <p class="subtitle">Complete Roast Prep Information Landscape</p>
+            </div>
+            <div class="progress-section">
+                <div class="progress-percentage" id="totalProgress">0%</div>
+                <div class="progress-label">Complete</div>
+            </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+
+        <!-- General prep zone -->
+        <div class="zone-header">General Prep Station</div>
+        <div class="general-prep-zone">
+            <div class="general-prep-grid" id="generalPrepGrid"></div>
+        </div>
+
+        <!-- Dish-specific zones -->
+        <div class="dish-zones">
+            <div class="zone-header">Dish Stations</div>
+            <div class="dish-grid" id="dishGrid"></div>
+        </div>
+
+        <!-- Equipment zone -->
+        <div class="equipment-zone">
+            <div class="zone-header" style="color: var(--purple); margin-bottom: 1rem;">Tools & Equipment Checklist</div>
+            <div class="equipment-grid" id="equipmentGrid"></div>
+        </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip">
+        <p class="tooltip-text">
+            <span class="tooltip-ingredient" id="tooltipIngredient"></span> is shared between:
+            <span class="tooltip-dishes" id="tooltipDishes"></span>
+        </p>
+    </div>
+
+    <script>
+        // Complete data structure
+        const prepData = {
+            generalPrep: [
+                { id: 'spices', name: 'Spices for Garnish', items: ['Rose Petals', 'Masala Spice', 'Green Peppercorn', 'Black Lime', 'Sumac'], quantity: null },
+                { id: 'cilantro', name: 'Cilantro', items: ['Bulk herb prep'], quantity: '2 quarts' },
+                { id: 'parsley', name: 'Parsley', items: ['Bulk herb prep', 'Portion for Dates chiffonade'], quantity: '4 quarts' },
+                { id: 'mint', name: 'Mint', items: ['Bulk herb prep'], quantity: '4 quarts' },
+                { id: 'dill', name: 'Dill', items: ['Bulk herb prep'], quantity: '1 quart' },
+                { id: 'redonion', name: 'Red Onion', items: ['Fine slice'], quantity: '2/3 quart' }
+            ],
+            dishes: [
+                {
+                    id: 'dates',
+                    name: 'DATES',
+                    items: [
+                        { name: 'Rendered dates', crossRef: null },
+                        { name: 'Piquillo', crossRef: null },
+                        { name: 'Cut ciabatta', crossRef: null },
+                        { name: 'Chiffonade parsley', crossRef: 'From bulk prep' }
+                    ],
+                    color: { primary: '#F59E0B', bg: 'from-amber-600' }
+                },
+                {
+                    id: 'fishCurry',
+                    name: 'FISH CURRY',
+                    items: [
+                        { name: 'Portioned black cod', crossRef: null },
+                        { name: 'Curry sauce', crossRef: null },
+                        { name: 'Cucumber raita', crossRef: null },
+                        { name: 'Eggplant', crossRef: null },
+                        { name: 'Cilantro', crossRef: 'From bulk prep' },
+                        { name: 'Dill', crossRef: 'From bulk prep' }
+                    ],
+                    subRecipe: {
+                        name: 'Crispy Onions',
+                        tools: 'Two mixing bowls, one sheet tray lined with towel',
+                        ingredients: '5 White Onions (Sliced thin), Sir Galahad Flour, Red Chile Powder, Salt',
+                        method: 'Dredge sliced onions in flour. Fry until crispy, toss with red chile and salt.'
+                    },
+                    color: { primary: '#3B82F6', bg: 'from-blue-600' }
+                },
+                {
+                    id: 'prawns',
+                    name: 'PRAWNS',
+                    items: [
+                        { name: 'Prawns', crossRef: null },
+                        { name: 'Shrimp butter', crossRef: null },
+                        { name: 'Shatta', crossRef: null },
+                        { name: 'Cherry tomato', crossRef: null },
+                        { name: 'Rose petals', crossRef: 'From general spice prep' }
+                    ],
+                    color: { primary: '#EC4899', bg: 'from-pink-600' }
+                },
+                {
+                    id: 'charredCabbage',
+                    name: 'CHARRED CABBAGE',
+                    items: [
+                        { name: 'Braised cabbage', crossRef: null },
+                        { name: 'Rice mix', crossRef: null },
+                        { name: 'Poppy seed yogurt', crossRef: null },
+                        { name: 'Masala spice', crossRef: 'From general spice prep' },
+                        { name: 'Romp/dill', crossRef: null },
+                        { name: 'Pickled raisins', crossRef: null }
+                    ],
+                    color: { primary: '#10B981', bg: 'from-emerald-600' }
+                },
+                {
+                    id: 'shortRibRadishHummus',
+                    name: 'SHORT RIB/RADISH HUMMUS',
+                    items: [
+                        { name: 'Short ribs', crossRef: null },
+                        { name: 'Sumac glaze', crossRef: null },
+                        { name: 'Hummus', crossRef: null },
+                        { name: 'Red onion', crossRef: 'From bulk prep' },
+                        { name: 'Parsley', crossRef: 'From bulk prep' },
+                        { name: 'Mint', crossRef: 'From bulk prep' },
+                        { name: 'Green tahina', crossRef: null },
+                        { name: 'Charred spring onion', crossRef: null },
+                        { name: 'Cut radish/cucumber', crossRef: null },
+                        { name: 'Shabazi', crossRef: null },
+                        { name: 'Sumac', crossRef: 'From general spice prep' }
+                    ],
+                    color: { primary: '#F97316', bg: 'from-orange-600' }
+                },
+                {
+                    id: 'porterhouse',
+                    name: 'PORTERHOUSE',
+                    items: [
+                        { name: 'Steak', crossRef: null },
+                        { name: 'Ground green peppercorn', crossRef: null },
+                        { name: 'Tomato coriander', crossRef: null },
+                        { name: 'Black lime powder', crossRef: 'From general spice prep' },
+                        { name: 'Labneh', crossRef: null },
+                        { name: 'Peppercorn butter', crossRef: null },
+                        { name: 'Confit garlic', crossRef: null }
+                    ],
+                    color: { primary: '#A855F7', bg: 'from-purple-600' }
+                }
+            ],
+            equipment: [
+                'Cutting Board', 'Knives', 'Bain-Marie Setup', 'Spoons & Ladles',
+                'Container for Pita', 'Cambros (2 x 24qt)', 'Storage Containers',
+                'Mixing Bowls (2)', 'Sheet Pans (2 half, 1 rack, 4 full)',
+                'All-Clad & Roast Pans', '6th, 3rd, 9th, Hotel Pans',
+                'Deli Containers & Lids', 'Gloves'
+            ]
+        };
+
+        // Shared ingredients mapping
+        const sharedIngredients = {
+            'Sumac': ['shortRibRadishHummus'],
+            'Parsley': ['shortRibRadishHummus', 'dates'],
+            'Dill': ['fishCurry', 'charredCabbage'],
+            'Cilantro': ['fishCurry'],
+            'Mint': ['shortRibRadishHummus'],
+            'Red onion': ['shortRibRadishHummus'],
+            'Rose petals': ['prawns'],
+            'Masala spice': ['charredCabbage'],
+            'Black lime powder': ['porterhouse']
+        };
+
+        // State management
+        const state = {
+            completedItems: new Set(),
+            touchedDishes: new Set(),
+            activeIngredient: null
+        };
+
+        // Icons
+        const checkIcon = `<svg class="icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>`;
+
+        const sparkleIcon = `<svg class="icon sparkle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+        </svg>`;
+
+        const circleIcon = `<svg class="icon shared-indicator" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+        </svg>`;
+
+        // Helper functions
+        function getDishProgress(dishId) {
+            const dish = prepData.dishes.find(d => d.id === dishId);
+            let totalItems = dish.items.length;
+            if (dish.subRecipe) totalItems++;
+            
+            let completed = dish.items.filter((item, idx) => 
+                state.completedItems.has(`${dishId}-${idx}`)
+            ).length;
+            
+            if (dish.subRecipe && state.completedItems.has(`${dishId}-subrecipe`)) {
+                completed++;
+            }
+            
+            return completed / totalItems;
+        }
+
+        function getTotalProgress() {
+            let totalItems = 0;
+            let completedCount = 0;
+            
+            // General prep items
+            prepData.generalPrep.forEach(item => {
+                totalItems++;
+                if (state.completedItems.has(`general-${item.id}`)) {
+                    completedCount++;
+                }
+            });
+            
+            // Dish items
+            prepData.dishes.forEach(dish => {
+                totalItems += dish.items.length;
+                if (dish.subRecipe) totalItems++;
+                
+                dish.items.forEach((item, idx) => {
+                    if (state.completedItems.has(`${dish.id}-${idx}`)) {
+                        completedCount++;
+                    }
+                });
+                
+                if (dish.subRecipe && state.completedItems.has(`${dish.id}-subrecipe`)) {
+                    completedCount++;
+                }
+            });
+            
+            // Equipment items
+            prepData.equipment.forEach((item, idx) => {
+                totalItems++;
+                if (state.completedItems.has(`equipment-${idx}`)) {
+                    completedCount++;
+                }
+            });
+            
+            return totalItems > 0 ? completedCount / totalItems : 0;
+        }
+
+        function updateProgress() {
+            const totalProgress = getTotalProgress();
+            document.getElementById('totalProgress').textContent = Math.round(totalProgress * 100) + '%';
+            document.getElementById('progressFill').style.width = (totalProgress * 100) + '%';
+        }
+
+        function toggleItem(itemKey) {
+            if (state.completedItems.has(itemKey)) {
+                state.completedItems.delete(itemKey);
+            } else {
+                state.completedItems.add(itemKey);
+                
+                // Mark dish as touched
+                const dishId = itemKey.split('-')[0];
+                if (dishId !== 'general' && dishId !== 'equipment') {
+                    state.touchedDishes.add(dishId);
+                }
+            }
+            
+            updateProgress();
+            saveState();
+        }
+
+        function showTooltip(ingredient) {
+            if (sharedIngredients[ingredient]) {
+                const tooltip = document.getElementById('tooltip');
+                const ingredientSpan = document.getElementById('tooltipIngredient');
+                const dishesSpan = document.getElementById('tooltipDishes');
+                
+                ingredientSpan.textContent = ingredient;
+                dishesSpan.textContent = sharedIngredients[ingredient]
+                    .map(dishId => prepData.dishes.find(d => d.id === dishId)?.name)
+                    .join(' & ');
+                
+                tooltip.classList.add('visible');
+                state.activeIngredient = ingredient;
+                
+                // Highlight connections
+                updateConnections();
+            }
+        }
+
+        function hideTooltip() {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.classList.remove('visible');
+            state.activeIngredient = null;
+            
+            // Clear highlights
+            document.querySelectorAll('.ingredient-item.active-shared').forEach(item => {
+                item.classList.remove('active-shared');
+            });
+            
+            // Clear connection lines
+            document.getElementById('connectionLines').innerHTML = '';
+        }
+
+        function updateConnections() {
+            // Visual connections would be drawn here
+            // For now, just highlight the related items
+            if (state.activeIngredient && sharedIngredients[state.activeIngredient]) {
+                sharedIngredients[state.activeIngredient].forEach(dishId => {
+                    const card = document.querySelector(`[data-dish-id="${dishId}"]`);
+                    if (card) {
+                        const items = card.querySelectorAll('.ingredient-item');
+                        items.forEach(item => {
+                            if (item.querySelector('.ingredient-name').textContent.includes(state.activeIngredient)) {
+                                item.classList.add('active-shared');
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        // Create general prep items
+        function createGeneralPrepGrid() {
+            const grid = document.getElementById('generalPrepGrid');
+            
+            prepData.generalPrep.forEach(item => {
+                const itemKey = `general-${item.id}`;
+                const isComplete = state.completedItems.has(itemKey);
+                
+                const itemHtml = `
+                    <div class="general-item ${isComplete ? 'complete' : ''}" 
+                         onclick="toggleItem('${itemKey}'); updateGeneralItem('${item.id}');"
+                         data-general-id="${item.id}">
+                        <div class="general-item-header">
+                            <span>${item.name}</span>
+                            ${item.quantity ? `<span class="quantity-badge">${item.quantity}</span>` : ''}
+                        </div>
+                        <div class="general-item-detail">
+                            ${item.items.join(', ')}
+                        </div>
+                    </div>
+                `;
+                
+                grid.insertAdjacentHTML('beforeend', itemHtml);
+            });
+        }
+
+        function updateGeneralItem(itemId) {
+            const itemKey = `general-${itemId}`;
+            const element = document.querySelector(`[data-general-id="${itemId}"]`);
+            
+            if (state.completedItems.has(itemKey)) {
+                element.classList.add('complete');
+            } else {
+                element.classList.remove('complete');
+            }
+        }
+
+        // Create dish card HTML
+        function createDishCard(dish) {
+            const progress = getDishProgress(dish.id);
+            const isComplete = progress === 1;
+            const isTouched = state.touchedDishes.has(dish.id);
+            
+            const gradientStyle = `linear-gradient(135deg, ${dish.color.primary}26 0%, transparent 100%)`;
+            const shadowStyle = `0 20px 40px -20px ${dish.color.primary}66`;
+            const progressGradient = isComplete ? '' : `linear-gradient(to right, ${dish.color.primary} 0%, transparent 100%)`;
+            
+            let ingredientsHTML = dish.items.map((item, idx) => {
+                const itemKey = `${dish.id}-${idx}`;
+                const isItemComplete = state.completedItems.has(itemKey);
+                const isShared = Object.keys(sharedIngredients).some(key => 
+                    item.name.includes(key) && sharedIngredients[key].includes(dish.id)
+                );
+                
+                return `
+                    <button class="ingredient-item ${isItemComplete ? 'complete' : ''} ${isShared ? 'shared' : ''}" 
+                            data-item-index="${idx}"
+                            onclick="toggleItem('${dish.id}-${idx}'); updateDishCard('${dish.id}');"
+                            ${isShared ? `onmouseenter="showTooltip('${Object.keys(sharedIngredients).find(key => item.name.includes(key))}')" onmouseleave="hideTooltip()"` : ''}>
+                        <div class="ingredient-checkbox ${isItemComplete ? 'complete' : ''}">
+                            ${isItemComplete ? checkIcon : (idx + 1)}
+                        </div>
+                        <span class="ingredient-name ${isItemComplete ? 'complete' : ''}">${item.name}</span>
+                        ${item.crossRef ? `<span class="cross-ref">${item.crossRef}</span>` : ''}
+                        ${isShared && !isItemComplete ? circleIcon : ''}
+                    </button>
+                `;
+            }).join('');
+            
+            // Add sub-recipe if exists
+            if (dish.subRecipe) {
+                const subRecipeKey = `${dish.id}-subrecipe`;
+                const isSubRecipeComplete = state.completedItems.has(subRecipeKey);
+                
+                ingredientsHTML += `
+                    <div class="sub-recipe">
+                        <button class="ingredient-item ${isSubRecipeComplete ? 'complete' : ''}" 
+                                onclick="toggleItem('${subRecipeKey}'); updateDishCard('${dish.id}');">
+                            <div class="ingredient-checkbox ${isSubRecipeComplete ? 'complete' : ''}">
+                                ${isSubRecipeComplete ? checkIcon : '★'}
+                            </div>
+                            <div style="flex: 1;">
+                                <div class="sub-recipe-title">${dish.subRecipe.name}</div>
+                                <div class="sub-recipe-content">
+                                    <div class="sub-recipe-section">
+                                        <span class="sub-recipe-label">Tools:</span> ${dish.subRecipe.tools}
+                                    </div>
+                                    <div class="sub-recipe-section">
+                                        <span class="sub-recipe-label">Ingredients:</span> ${dish.subRecipe.ingredients}
+                                    </div>
+                                    <div class="sub-recipe-section">
+                                        <span class="sub-recipe-label">Method:</span> ${dish.subRecipe.method}
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="dish-card ${isComplete ? 'complete' : ''} ${isTouched && !isComplete ? 'touched' : ''}" 
+                     data-dish-id="${dish.id}"
+                     style="background: ${gradientStyle}; box-shadow: ${shadowStyle};">
+                    <div class="glass-bg"></div>
+                    
+                    <div class="dish-header">
+                        <div class="dish-title-row">
+                            <h3 class="dish-name ${isComplete ? 'complete' : ''}">${dish.name}</h3>
+                            <div class="sparkle-icon ${isComplete ? 'visible' : ''}">${sparkleIcon}</div>
+                        </div>
+                        
+                        <div class="dish-progress">
+                            <div class="dish-progress-fill ${isComplete ? 'complete' : ''}" 
+                                 style="width: ${progress * 100}%; ${isComplete ? '' : `background: ${progressGradient}`}"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredients-list">
+                        ${ingredientsHTML}
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateDishCard(dishId) {
+            const dish = prepData.dishes.find(d => d.id === dishId);
+            const card = document.querySelector(`[data-dish-id="${dishId}"]`);
+            
+            if (card) {
+                card.outerHTML = createDishCard(dish);
+            }
+        }
+
+        // Create equipment grid
+        function createEquipmentGrid() {
+            const grid = document.getElementById('equipmentGrid');
+            
+            prepData.equipment.forEach((item, idx) => {
+                const itemKey = `equipment-${idx}`;
+                const isComplete = state.completedItems.has(itemKey);
+                
+                const itemHtml = `
+                    <div class="equipment-item ${isComplete ? 'complete' : ''}" 
+                         onclick="toggleItem('${itemKey}'); updateEquipmentItem(${idx});"
+                         data-equipment-index="${idx}">
+                        ${item}
+                    </div>
+                `;
+                
+                grid.insertAdjacentHTML('beforeend', itemHtml);
+            });
+        }
+
+        function updateEquipmentItem(index) {
+            const itemKey = `equipment-${index}`;
+            const element = document.querySelector(`[data-equipment-index="${index}"]`);
+            
+            if (state.completedItems.has(itemKey)) {
+                element.classList.add('complete');
+            } else {
+                element.classList.remove('complete');
+            }
+        }
+
+        // Save/Load state
+        function saveState() {
+            localStorage.setItem('boh-mise-state', JSON.stringify({
+                completedItems: Array.from(state.completedItems),
+                touchedDishes: Array.from(state.touchedDishes)
+            }));
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('boh-mise-state');
+            if (saved) {
+                const data = JSON.parse(saved);
+                state.completedItems = new Set(data.completedItems);
+                state.touchedDishes = new Set(data.touchedDishes);
+            }
+        }
+
+        // Initialize the app
+        function init() {
+            loadState();
+            
+            // Create all zones
+            createGeneralPrepGrid();
+            
+            const dishGrid = document.getElementById('dishGrid');
+            dishGrid.innerHTML = prepData.dishes.map(dish => createDishCard(dish)).join('');
+            
+            createEquipmentGrid();
+            
+            updateProgress();
+        }
+
+        // Start the app
+        init();
+    </script>
+</body>
+</html>
