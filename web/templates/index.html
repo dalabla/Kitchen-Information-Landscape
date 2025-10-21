@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Image Parser - Kitchen Information Landscape</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3B82F6;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #fff 0%, rgba(255,255,255,0.6) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .upload-section {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .upload-area {
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 0.5rem;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+            transform: scale(1.05);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .results-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .ticket-info {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .ticket-info h2 {
+            margin-bottom: 1rem;
+        }
+
+        .ticket-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .meta-item {
+            background: rgba(0,0,0,0.2);
+            padding: 0.75rem;
+            border-radius: 0.25rem;
+        }
+
+        .meta-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+        }
+
+        .meta-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 0.25rem;
+        }
+
+        .instructions-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .instruction-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .instruction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .dish-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .priority-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .priority-critical {
+            background: var(--danger);
+        }
+
+        .priority-high {
+            background: var(--warning);
+        }
+
+        .priority-normal {
+            background: var(--success);
+        }
+
+        .instruction-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .equipment-list, .ingredient-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .list-item {
+            background: rgba(0,0,0,0.2);
+            padding: 0.75rem;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox {
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 0.25rem;
+        }
+
+        .build-steps {
+            counter-reset: step-counter;
+        }
+
+        .build-step {
+            background: rgba(0,0,0,0.2);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .build-step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            width: 2rem;
+            height: 2rem;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .build-step.critical {
+            border-left: 4px solid var(--danger);
+        }
+
+        .step-action {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-detail {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+        }
+
+        .plating-steps {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--success);
+        }
+
+        .plating-description {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .plating-steps ol {
+            margin-left: 1.5rem;
+        }
+
+        .plating-steps li {
+            margin: 0.5rem 0;
+        }
+
+        .critical-notes {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .triage-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .triage-card {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .triage-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .triage-label {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍽️ POS Image Parser</h1>
+            <p class="subtitle">Upload POS tickets to get complete cooking instructions and triage</p>
+        </header>
+
+        <div class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📸</div>
+                <p style="margin-bottom: 1rem; font-size: 1.1rem;">Drag & drop POS image or click to upload</p>
+                <button class="btn" onclick="document.getElementById('fileInput').click()">
+                    Choose File
+                </button>
+                <input type="file" id="fileInput" accept="image/*">
+                <p style="margin-top: 1rem; color: var(--gray); font-size: 0.875rem;">
+                    Supports: PNG, JPG, JPEG, GIF, BMP (Max 16MB)
+                </p>
+            </div>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p style="margin-top: 1rem;">Processing POS image...</p>
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+
+        <div id="results" class="results-section"></div>
+    </div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const loading = document.getElementById('loading');
+        const errorDiv = document.getElementById('error');
+        const resultsDiv = document.getElementById('results');
+
+        // Drag and drop handlers
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        async function handleFile(file) {
+            // Validate file
+            const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/bmp'];
+            if (!validTypes.includes(file.type)) {
+                showError('Invalid file type. Please upload an image file.');
+                return;
+            }
+
+            if (file.size > 16 * 1024 * 1024) {
+                showError('File too large. Maximum size is 16MB.');
+                return;
+            }
+
+            // Upload and process
+            const formData = new FormData();
+            formData.append('pos_image', file);
+
+            loading.style.display = 'block';
+            errorDiv.style.display = 'none';
+            resultsDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Upload failed');
+                }
+
+                displayResults(data);
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function showError(message) {
+            errorDiv.textContent = `❌ Error: ${message}`;
+            errorDiv.style.display = 'block';
+        }
+
+        function displayResults(data) {
+            const { ticket, instructions, triage } = data;
+
+            let html = `
+                <div class="ticket-info">
+                    <h2>📋 Ticket Information</h2>
+                    <div class="ticket-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Ticket ID</div>
+                            <div class="meta-value">#${ticket.ticket_id}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Table</div>
+                            <div class="meta-value">${ticket.table_number}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Items</div>
+                            <div class="meta-value">${ticket.items.length}</div>
+                        </div>
+                        ${ticket.server_name ? `
+                        <div class="meta-item">
+                            <div class="meta-label">Server</div>
+                            <div class="meta-value">${ticket.server_name}</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                <div class="triage-summary">
+                    <div class="triage-card">
+                        <div class="triage-value">${triage.total_active_tasks}</div>
+                        <div class="triage-label">Active Tasks</div>
+                    </div>
+                    <div class="triage-card">
+                        <div class="triage-value">${triage.total_cook_time_minutes} min</div>
+                        <div class="triage-label">Total Cook Time</div>
+                    </div>
+                    ${triage.bottleneck_stations.length > 0 ? `
+                    <div class="triage-card">
+                        <div class="triage-value">⚠️</div>
+                        <div class="triage-label">Bottlenecks: ${triage.bottleneck_stations.join(', ')}</div>
+                    </div>
+                    ` : ''}
+                </div>
+
+                <div class="instructions-grid">
+            `;
+
+            instructions.forEach(inst => {
+                html += generateInstructionCard(inst);
+            });
+
+            html += '</div>';
+
+            resultsDiv.innerHTML = html;
+            resultsDiv.style.display = 'block';
+        }
+
+        function generateInstructionCard(inst) {
+            const priorityClass = `priority-${inst.priority_level.toLowerCase()}`;
+
+            return `
+                <div class="instruction-card">
+                    <div class="instruction-header">
+                        <div class="dish-title">${inst.dish_name}</div>
+                        <div class="priority-badge ${priorityClass}">${inst.priority_level}</div>
+                    </div>
+
+                    ${inst.critical_notes ? `
+                    <div class="critical-notes">
+                        <strong>⚠️ CRITICAL:</strong> ${inst.critical_notes}
+                    </div>
+                    ` : ''}
+
+                    ${inst.modifiers.length > 0 ? `
+                    <div class="instruction-section">
+                        <div class="section-title">🔧 Modifications</div>
+                        <ul>
+                            ${inst.modifiers.map(mod => `<li>${mod}</li>`).join('')}
+                        </ul>
+                    </div>
+                    ` : ''}
+
+                    <div class="instruction-section">
+                        <div class="section-title">🔨 Equipment (${inst.equipment_needed.length})</div>
+                        <div class="equipment-list">
+                            ${inst.equipment_needed.map(eq => `
+                                <div class="list-item">
+                                    <div class="checkbox"></div>
+                                    <span>${eq}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="instruction-section">
+                        <div class="section-title">📦 Ingredients</div>
+                        <div class="ingredient-list">
+                            ${inst.ingredients_needed.map(ing => `
+                                <div class="list-item">
+                                    <div class="checkbox"></div>
+                                    <div>
+                                        <div><strong>${ing.name}</strong></div>
+                                        <div style="font-size: 0.8rem; color: var(--gray);">
+                                            ${ing.quantity || ''} - ${ing.location || ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="instruction-section">
+                        <div class="section-title">⏰ Timing</div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 0.5rem;">
+                            <strong>Total Time:</strong> ${inst.total_time_minutes} minutes<br>
+                            <strong>Station:</strong> ${inst.station}<br>
+                            <strong>Note:</strong> ${inst.timing_notes}
+                        </div>
+                    </div>
+
+                    <div class="instruction-section">
+                        <div class="section-title">👨‍🍳 Cooking Steps</div>
+                        <div class="build-steps">
+                            ${inst.build_steps.map(step => `
+                                <div class="build-step ${step.critical ? 'critical' : ''}">
+                                    <div class="step-action">${step.action}</div>
+                                    ${step.time ? `<div class="step-detail">⏱️ Time: ${step.time}</div>` : ''}
+                                    ${step.temp ? `<div class="step-detail">🔥 Heat: ${step.temp}</div>` : ''}
+                                    ${step.technique ? `<div class="step-detail">🎯 Technique: ${step.technique}</div>` : ''}
+                                    ${step.visual_cue ? `<div class="step-detail">👁️ Visual Cue: ${step.visual_cue}</div>` : ''}
+                                    ${step.note ? `<div class="step-detail">📝 ${step.note}</div>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="instruction-section">
+                        <div class="section-title">🍽️ Plating</div>
+                        <div class="plating-steps">
+                            <div class="plating-description">${inst.plating.description}</div>
+                            <ol>
+                                ${inst.plating.steps.map(step => `<li>${step}</li>`).join('')}
+                            </ol>
+                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                                <strong>💡 Presentation:</strong> ${inst.plating.presentation_notes}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

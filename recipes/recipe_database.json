@@ -1,0 +1,472 @@
+{
+  "dishes": {
+    "dates": {
+      "id": "dates",
+      "name": "Dates",
+      "station": "hot_apps",
+      "cook_time_minutes": 8,
+      "difficulty": "easy",
+      "equipment": [
+        "Cutting board",
+        "Chef's knife",
+        "Sauté pan",
+        "Small bowl for plating"
+      ],
+      "ingredients": [
+        {"name": "Rendered dates", "quantity": "6 pieces", "location": "lowboy"},
+        {"name": "Piquillo peppers", "quantity": "2 pieces", "location": "lowboy"},
+        {"name": "Ciabatta bread", "quantity": "3 slices", "location": "bread station"},
+        {"name": "Parsley chiffonade", "quantity": "pinch", "location": "herb mise"}
+      ],
+      "build_steps": [
+        {
+          "step": 1,
+          "action": "Heat sauté pan over medium-high heat",
+          "time": "1 min",
+          "temp": "medium-high"
+        },
+        {
+          "step": 2,
+          "action": "Toast ciabatta slices until golden brown on both sides",
+          "time": "2 min",
+          "visual_cue": "Golden brown, crispy edges"
+        },
+        {
+          "step": 3,
+          "action": "Warm rendered dates in pan until heated through",
+          "time": "2 min",
+          "visual_cue": "Dates should be glossy and warm to touch"
+        },
+        {
+          "step": 4,
+          "action": "Warm piquillo peppers",
+          "time": "1 min"
+        }
+      ],
+      "plating": {
+        "description": "Compose on warm plate with ciabatta as base",
+        "steps": [
+          "Place 3 ciabatta slices in triangular pattern on plate",
+          "Top each slice with 2 rendered dates",
+          "Place piquillo pepper pieces between dates",
+          "Finish with parsley chiffonade over top",
+          "Drizzle any pan residue around plate"
+        ],
+        "presentation_notes": "Rustic, warm presentation. Dates should glisten."
+      },
+      "timing_notes": "Fire when appetizer call comes. Quick turnaround dish.",
+      "common_mods": ["No bread/GF request - serve dates over greens"]
+    },
+    "fish_curry": {
+      "id": "fish_curry",
+      "name": "Fish Curry",
+      "station": "hot_entrees",
+      "cook_time_minutes": 12,
+      "difficulty": "medium",
+      "equipment": [
+        "Large sauté pan",
+        "Fish spatula",
+        "Small pot for curry sauce",
+        "Plating spoon",
+        "Serving bowl"
+      ],
+      "ingredients": [
+        {"name": "Black cod portion", "quantity": "6 oz", "location": "fish lowboy"},
+        {"name": "Curry sauce", "quantity": "4 oz", "location": "hot station"},
+        {"name": "Cucumber raita", "quantity": "2 oz", "location": "cold station"},
+        {"name": "Eggplant", "quantity": "4 pieces", "location": "lowboy"},
+        {"name": "Cilantro", "quantity": "small handful", "location": "herb mise"},
+        {"name": "Dill", "quantity": "4-5 fronds", "location": "herb mise"},
+        {"name": "Crispy onions", "quantity": "small handful", "location": "dry mise"}
+      ],
+      "prep_components": {
+        "crispy_onions": {
+          "name": "Crispy Onions",
+          "tools": ["2 mixing bowls", "Sheet tray", "Paper towels", "Deep fryer"],
+          "ingredients": [
+            "5 white onions, sliced thin",
+            "Sir Galahad flour",
+            "Red chile powder",
+            "Salt"
+          ],
+          "method": [
+            "Slice onions paper-thin on mandoline",
+            "Dredge in flour, shake off excess",
+            "Fry at 350°F until golden and crispy (3-4 minutes)",
+            "Drain on paper towels",
+            "Toss immediately with red chile powder and salt to taste"
+          ],
+          "storage": "Store in airtight container. Good for 2 days.",
+          "yield": "About 3 cups"
+        }
+      },
+      "build_steps": [
+        {
+          "step": 1,
+          "action": "Heat curry sauce in small pot to simmer",
+          "time": "2 min",
+          "temp": "low simmer"
+        },
+        {
+          "step": 2,
+          "action": "Heat large sauté pan with oil until shimmering",
+          "time": "2 min",
+          "temp": "medium-high"
+        },
+        {
+          "step": 3,
+          "action": "Season cod with salt. Place skin-side down in pan",
+          "time": "5 min",
+          "technique": "Press gently with spatula first 30 seconds to prevent curling",
+          "visual_cue": "Skin should be golden and crispy"
+        },
+        {
+          "step": 4,
+          "action": "Flip cod, cook flesh side",
+          "time": "2 min",
+          "visual_cue": "Fish should be opaque and flake easily"
+        },
+        {
+          "step": 5,
+          "action": "While cod finishes, warm eggplant in curry sauce",
+          "time": "1 min"
+        }
+      ],
+      "plating": {
+        "description": "Build in wide, shallow bowl for sauce presentation",
+        "steps": [
+          "Ladle 4 oz curry sauce into center of bowl",
+          "Arrange warmed eggplant pieces in sauce",
+          "Place cod skin-side up on top of eggplant",
+          "Spoon cucumber raita around the perimeter",
+          "Garnish cod with cilantro and dill",
+          "Top with crispy onions for texture and height"
+        ],
+        "presentation_notes": "Cod skin must be crispy and up. Herbs should be fresh and vibrant. Sauce should pool elegantly."
+      },
+      "timing_notes": "Fire on main call. Cod needs undivided attention - don't walk away.",
+      "common_mods": [
+        "Spice level - add or reduce chile in curry",
+        "No onions - omit crispy onions"
+      ],
+      "critical_notes": "DO NOT OVERCOOK COD. Better slightly under than over. Skin must be crispy."
+    },
+    "prawns": {
+      "id": "prawns",
+      "name": "Prawns",
+      "station": "hot_apps",
+      "cook_time_minutes": 6,
+      "difficulty": "easy",
+      "equipment": [
+        "Large sauté pan",
+        "Tongs",
+        "Small plate for plating"
+      ],
+      "ingredients": [
+        {"name": "Head-on prawns", "quantity": "3 pieces", "location": "seafood lowboy"},
+        {"name": "Shrimp butter", "quantity": "2 oz", "location": "lowboy"},
+        {"name": "Shatta (chile sauce)", "quantity": "1 oz", "location": "sauce station"},
+        {"name": "Cherry tomatoes", "quantity": "5 pieces", "location": "produce"},
+        {"name": "Rose petals", "quantity": "pinch", "location": "spice mise"}
+      ],
+      "build_steps": [
+        {
+          "step": 1,
+          "action": "Heat sauté pan to high heat",
+          "time": "1 min",
+          "temp": "high"
+        },
+        {
+          "step": 2,
+          "action": "Season prawns with salt, place in dry hot pan",
+          "time": "2 min per side",
+          "technique": "Get a good sear, don't move them around",
+          "visual_cue": "Nice char marks, heads turn red"
+        },
+        {
+          "step": 3,
+          "action": "Add cherry tomatoes to pan, blister",
+          "time": "1 min",
+          "visual_cue": "Tomatoes start to burst"
+        },
+        {
+          "step": 4,
+          "action": "Add shrimp butter, toss to coat",
+          "time": "30 sec",
+          "technique": "Pan should be hot enough that butter foams immediately"
+        }
+      ],
+      "plating": {
+        "description": "Rustic, vibrant presentation highlighting the prawns",
+        "steps": [
+          "Arrange prawns on plate with heads facing out",
+          "Spoon shatta in small pools around plate",
+          "Scatter blistered tomatoes",
+          "Drizzle remaining shrimp butter over prawns",
+          "Garnish with rose petals for color and aromatics"
+        ],
+        "presentation_notes": "Prawns are the star. Heads should look vibrant. Rose petals add elegant touch."
+      },
+      "timing_notes": "Hot fire, quick execution. Fire on ticket call.",
+      "common_mods": ["Extra spicy - add more shatta"],
+      "critical_notes": "Don't overcook prawns - they get rubbery. Should be just opaque."
+    },
+    "charred_cabbage": {
+      "id": "charred_cabbage",
+      "name": "Charred Cabbage",
+      "station": "hot_entrees",
+      "cook_time_minutes": 10,
+      "difficulty": "medium",
+      "equipment": [
+        "Cast iron pan or plancha",
+        "Large spoon",
+        "Serving plate"
+      ],
+      "ingredients": [
+        {"name": "Braised cabbage wedge", "quantity": "1 wedge", "location": "lowboy"},
+        {"name": "Rice mix", "quantity": "4 oz", "location": "hot station"},
+        {"name": "Poppy seed yogurt", "quantity": "2 oz", "location": "cold station"},
+        {"name": "Masala spice", "quantity": "pinch", "location": "spice mise"},
+        {"name": "Romesco", "quantity": "1 oz", "location": "sauce station"},
+        {"name": "Dill fronds", "quantity": "small handful", "location": "herb mise"},
+        {"name": "Pickled raisins", "quantity": "1 oz", "location": "pickle station"}
+      ],
+      "build_steps": [
+        {
+          "step": 1,
+          "action": "Heat cast iron or plancha to high",
+          "time": "3 min",
+          "temp": "high - should be smoking"
+        },
+        {
+          "step": 2,
+          "action": "Warm rice mix in pot",
+          "time": "2 min",
+          "temp": "medium"
+        },
+        {
+          "step": 3,
+          "action": "Place braised cabbage on hot surface, char all sides",
+          "time": "4 min total",
+          "technique": "Don't move too much - let it char properly",
+          "visual_cue": "Deep char marks, caramelized edges"
+        },
+        {
+          "step": 4,
+          "action": "Finish cabbage with brush of oil",
+          "time": "30 sec"
+        }
+      ],
+      "plating": {
+        "description": "Composed vegetable-forward plate with multiple textures",
+        "steps": [
+          "Spread poppy seed yogurt in swoosh across plate",
+          "Place warm rice mix in center",
+          "Position charred cabbage wedge on rice",
+          "Dot romesco around plate",
+          "Scatter pickled raisins over cabbage",
+          "Dust with masala spice",
+          "Garnish with fresh dill fronds"
+        ],
+        "presentation_notes": "Should look rustic but refined. Char marks visible. Multiple colors and textures."
+      },
+      "timing_notes": "Fire on main call. Char needs high heat and time.",
+      "common_mods": ["Vegan - check yogurt substitute"],
+      "critical_notes": "Cabbage must be charred properly for flavor. Don't rush."
+    },
+    "short_rib_radish_hummus": {
+      "id": "short_rib_radish_hummus",
+      "name": "Short Rib with Radish Hummus",
+      "station": "hot_entrees",
+      "cook_time_minutes": 15,
+      "difficulty": "medium-hard",
+      "equipment": [
+        "Cast iron pan",
+        "Tongs",
+        "Basting spoon",
+        "Serving plate",
+        "Butter warmer"
+      ],
+      "ingredients": [
+        {"name": "Short rib portion", "quantity": "8 oz", "location": "meat lowboy"},
+        {"name": "Sumac glaze", "quantity": "2 oz", "location": "sauce station"},
+        {"name": "Hummus", "quantity": "4 oz", "location": "cold station"},
+        {"name": "Red onion slices", "quantity": "small handful", "location": "prep mise"},
+        {"name": "Parsley", "quantity": "small handful", "location": "herb mise"},
+        {"name": "Mint", "quantity": "small handful", "location": "herb mise"},
+        {"name": "Green tahini", "quantity": "1 oz", "location": "sauce station"},
+        {"name": "Charred spring onion", "quantity": "2 pieces", "location": "lowboy"},
+        {"name": "Radish", "quantity": "3 slices", "location": "prep mise"},
+        {"name": "Cucumber", "quantity": "3 slices", "location": "prep mise"},
+        {"name": "Shabazi", "quantity": "pinch", "location": "spice mise"},
+        {"name": "Sumac", "quantity": "pinch", "location": "spice mise"}
+      ],
+      "build_steps": [
+        {
+          "step": 1,
+          "action": "Remove short rib from lowboy, bring to room temp",
+          "time": "5 min",
+          "critical": true,
+          "note": "Cold meat won't cook properly"
+        },
+        {
+          "step": 2,
+          "action": "Heat cast iron to medium-high",
+          "time": "2 min",
+          "temp": "medium-high"
+        },
+        {
+          "step": 3,
+          "action": "Season short rib, sear all sides",
+          "time": "6 min total",
+          "technique": "Get good crust on all sides, especially fat cap",
+          "visual_cue": "Deep brown crust, rendered fat"
+        },
+        {
+          "step": 4,
+          "action": "Warm sumac glaze",
+          "time": "1 min"
+        },
+        {
+          "step": 5,
+          "action": "Baste short rib with glaze in pan",
+          "time": "1 min",
+          "technique": "Spoon glaze over meat repeatedly"
+        }
+      ],
+      "plating": {
+        "description": "Middle Eastern mezze-style composed plate",
+        "steps": [
+          "Spread hummus generously on one side of plate",
+          "Slice short rib against grain into 4-5 pieces",
+          "Fan short rib slices across hummus",
+          "Arrange charred spring onions on plate",
+          "Scatter radish and cucumber slices",
+          "Distribute red onion, parsley, and mint over everything",
+          "Drizzle green tahini across plate",
+          "Dust with shabazi and sumac",
+          "Spoon any remaining sumac glaze over short rib"
+        ],
+        "presentation_notes": "Abundant, mezze-style. Meat sliced properly against grain. Fresh herbs bright and plentiful."
+      },
+      "timing_notes": "Fire 15 min before other entrees due to sear time. Short rib needs attention.",
+      "common_mods": [
+        "Gluten-free - confirm hummus/sauces",
+        "No onions - omit red onion and spring onion"
+      ],
+      "critical_notes": "Short rib MUST be room temp before cooking. Slice against grain or it's chewy. Don't overcook - should be medium-rare to medium."
+    },
+    "porterhouse": {
+      "id": "porterhouse",
+      "name": "Porterhouse Steak",
+      "station": "grill",
+      "cook_time_minutes": 18,
+      "difficulty": "hard",
+      "equipment": [
+        "Charcoal grill or plancha",
+        "Meat thermometer",
+        "Tongs",
+        "Basting brush",
+        "Cutting board",
+        "Sharp slicing knife",
+        "Serving platter"
+      ],
+      "ingredients": [
+        {"name": "Porterhouse steak", "quantity": "24 oz", "location": "meat lowboy"},
+        {"name": "Ground green peppercorn", "quantity": "1 tsp", "location": "spice mise"},
+        {"name": "Tomato coriander sauce", "quantity": "2 oz", "location": "sauce station"},
+        {"name": "Black lime powder", "quantity": "pinch", "location": "spice mise"},
+        {"name": "Labneh", "quantity": "2 oz", "location": "cold station"},
+        {"name": "Peppercorn butter", "quantity": "2 oz", "location": "butter mise"},
+        {"name": "Confit garlic cloves", "quantity": "6 pieces", "location": "lowboy"}
+      ],
+      "build_steps": [
+        {
+          "step": 1,
+          "action": "Remove steak from lowboy 30 min before cooking",
+          "time": "30 min",
+          "critical": true,
+          "note": "Room temperature steak cooks evenly"
+        },
+        {
+          "step": 2,
+          "action": "Season generously with salt and green peppercorn",
+          "time": "1 min",
+          "technique": "Press seasoning into meat"
+        },
+        {
+          "step": 3,
+          "action": "Ensure grill is at proper temp (500-600°F)",
+          "time": "varies",
+          "temp": "500-600°F",
+          "critical": true
+        },
+        {
+          "step": 4,
+          "action": "Place steak on hottest part of grill",
+          "time": "4 min",
+          "technique": "Don't move it - let it sear",
+          "visual_cue": "Good crust forming"
+        },
+        {
+          "step": 5,
+          "action": "Rotate 90 degrees for crosshatch marks",
+          "time": "3 min",
+          "visual_cue": "Diamond grill marks"
+        },
+        {
+          "step": 6,
+          "action": "Flip steak, repeat process",
+          "time": "7 min total",
+          "technique": "4 min, then rotate 90° for 3 min"
+        },
+        {
+          "step": 7,
+          "action": "Check temp: 120°F for rare, 130°F for medium-rare",
+          "time": "varies",
+          "critical": true,
+          "note": "Temp will rise 5° during rest"
+        },
+        {
+          "step": 8,
+          "action": "Rest steak on board, top with peppercorn butter",
+          "time": "8-10 min",
+          "critical": true,
+          "note": "Resting redistributes juices"
+        }
+      ],
+      "plating": {
+        "description": "Classic steakhouse presentation with Middle Eastern accents",
+        "steps": [
+          "Slice steak by cutting meat off both sides of bone",
+          "Slice strip and tenderloin against grain into 1/2 inch slices",
+          "Reconstruct steak on platter with bone in center",
+          "Spoon labneh on one side of plate",
+          "Drizzle tomato coriander sauce on other side",
+          "Arrange confit garlic cloves around steak",
+          "Dust entire plate with black lime powder",
+          "Pour any resting juices over sliced meat",
+          "Top with any remaining peppercorn butter"
+        ],
+        "presentation_notes": "Dramatic presentation. Meat should glisten. Perfect medium-rare throughout. Bone adds theater."
+      },
+      "timing_notes": "Fire early - needs 30 min room temp + 18 min cook + 8-10 min rest. Total 56 min from fire to pass.",
+      "common_mods": [
+        "Temp requests: rare (120°F), MR (130°F), M (140°F), MW (150°F), W (160°F)",
+        "No butter - use olive oil instead"
+      ],
+      "critical_notes": "THIS IS THE PRESTIGE DISH. Perfect execution required. Must rest full time. Slice properly against grain. Don't serve over medium unless requested."
+    }
+  },
+  "priority_factors": {
+    "cook_time_weight": 0.4,
+    "station_clustering": 0.2,
+    "difficulty_weight": 0.15,
+    "ticket_time_weight": 0.25
+  },
+  "station_assignments": {
+    "hot_apps": ["dates", "prawns"],
+    "hot_entrees": ["fish_curry", "charred_cabbage", "short_rib_radish_hummus"],
+    "grill": ["porterhouse"]
+  }
+}
